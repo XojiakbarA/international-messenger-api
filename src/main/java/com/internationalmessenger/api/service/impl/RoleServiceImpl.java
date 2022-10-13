@@ -20,4 +20,11 @@ public class RoleServiceImpl implements RoleService {
                 EntityNotFoundException::new
         );
     }
+
+    @Override
+    public Role saveByName(ERole name) {
+        Role role = new Role();
+        role.setName(name);
+        return roleRepository.save(role);
+    }
 }

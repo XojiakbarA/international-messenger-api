@@ -58,7 +58,7 @@ public class AuthController {
         User user = userService.getByEmail(authentication.getName());
         response.setToken(token);
         response.setMessage("You are logged in");
-        response.setUser(mapper.convertToUserDTO(user));
+        response.setContent(mapper.convertToUserDTO(user));
         return response;
     }
 

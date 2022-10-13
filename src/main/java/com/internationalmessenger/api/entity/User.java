@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -15,7 +17,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User extends Base {
-
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -41,4 +42,7 @@ public class User extends Base {
 
     @Column(name = "provider_id")
     private String providerId;
+
+    @OneToMany(mappedBy = "user")
+    private List<Locale> locales;
 }

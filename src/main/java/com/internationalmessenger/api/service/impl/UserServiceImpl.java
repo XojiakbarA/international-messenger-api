@@ -3,6 +3,7 @@ package com.internationalmessenger.api.service.impl;
 import com.internationalmessenger.api.entity.Role;
 import com.internationalmessenger.api.entity.User;
 import com.internationalmessenger.api.entity.enums.ERole;
+import com.internationalmessenger.api.exception.ResourceNotFoundException;
 import com.internationalmessenger.api.repository.UserRepository;
 import com.internationalmessenger.api.request.RegisterRequest;
 import com.internationalmessenger.api.service.RoleService;
@@ -26,21 +27,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new UsernameNotFoundException("User not found with email: " + email + ".")
+                () -> new UsernameNotFoundException("User not found with email: " + email)
         );
         return UserDetailsImpl.build(user);
     }
 
     @Override
-    public User getByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(
-                () -> new UsernameNotFoundException("User not found with email: " + email + ".")
+    public User getById(Long id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with id: " + id)
         );
     }
 
     @Override
-    public Boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with email: " + email)
+        );
     }
 
     @Override
