@@ -46,7 +46,7 @@ public class DataLoader implements CommandLineRunner {
         user.setEmail("admin@mail.ru");
         user.setPassword(passwordEncoder.encode("123"));
         user.setRole(role);
-        user.setProvider(EAuthProvider.LOCAL);
+        user.setProvider(EAuthProvider.local);
         userRepository.save(user);
     }
 
@@ -57,7 +57,7 @@ public class DataLoader implements CommandLineRunner {
         user.setEmail("user@mail.ru");
         user.setPassword(passwordEncoder.encode("123"));
         user.setRole(role);
-        user.setProvider(EAuthProvider.LOCAL);
+        user.setProvider(EAuthProvider.local);
         userRepository.save(user);
     }
 }

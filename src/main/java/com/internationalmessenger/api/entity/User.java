@@ -22,7 +22,7 @@ public class User extends Base {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "isNonLocked", nullable = false)
@@ -37,7 +37,7 @@ public class User extends Base {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "provider", nullable = false)
-    private EAuthProvider provider = EAuthProvider.LOCAL;
+    private EAuthProvider provider = EAuthProvider.local;
 
     @Column(name = "provider_id")
     private String providerId;
