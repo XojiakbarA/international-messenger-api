@@ -20,14 +20,6 @@ public class Mapper {
         return modelMapper.map(user, UserDTO.class);
     }
 
-    public RoleDTO convertToRoleDTO(Role role) {
-        return modelMapper.map(role, RoleDTO.class);
-    }
-
-    public LocaleDTO convertToLocaleDTO(Locale locale) {
-        return modelMapper.map(locale, LocaleDTO.class);
-    }
-
     public MessageDTO convertToMessageDTO(Message message) {
         Converter<User, Boolean> isMineConverter = u -> {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -51,10 +43,20 @@ public class Mapper {
             Message message = c.getSource().stream().reduce((first, second) -> second).orElse(null);
             return modelMapper.map(message, MessageDTO.class);
         };
+        Converter<Collection<Locale>, LocaleDTO> localeConverter = c -> {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String email = authentication.getName();
+            Locale locale = c.getSource().stream().filter(l -> l.getUser().getEmail().equals(email)).findFirst().orElse(null);
+            if (locale == null) {
+                return null;
+            }
+            return modelMapper.map(locale, LocaleDTO.class);
+        };
         return modelMapper
                 .typeMap(Chat.class, ChatDTO.class)
                 .addMappings(m -> m.using(userConverter).map(Chat::getUsers, ChatDTO::setUser))
                 .addMappings(m -> m.using(lastMessageConverter).map(Chat::getMessages, ChatDTO::setLastMessage))
+                .addMappings(m -> m.using(localeConverter).map(Chat::getLocales, ChatDTO::setLocale))
                 .map(chat);
     }
 }

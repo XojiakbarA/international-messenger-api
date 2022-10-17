@@ -2,7 +2,6 @@ package com.internationalmessenger.api.util;
 
 import com.internationalmessenger.api.entity.*;
 import com.internationalmessenger.api.entity.enums.ERole;
-import com.internationalmessenger.api.repository.*;
 import com.internationalmessenger.api.request.LocaleRequest;
 import com.internationalmessenger.api.request.MessageRequest;
 import com.internationalmessenger.api.request.RegisterRequest;
@@ -65,7 +64,8 @@ public class DataLoader implements CommandLineRunner {
         LocaleRequest request = new LocaleRequest();
         request.setChatId((long) 1);
         request.setUserId((long) 1);
-        request.setLanguage("RU");
+        request.setLanguageName("Russian");
+        request.setLanguageCode("ru");
         localeService.save(request);
 
     }

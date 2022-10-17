@@ -11,5 +11,7 @@ public class LocaleRequest {
     @NotBlank
     private Long userId;
     @NotBlank
-    private String language;
+    private String languageName;
+    @NotBlank
+    private String languageCode;
 }

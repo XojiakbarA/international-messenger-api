@@ -22,7 +22,7 @@ public class ChatMessageController {
     @GetMapping("/{id}/messages")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse getAllMessagesByChatId(@PathVariable Long id) {
-        List<Message> messages = messageService.getAllByChatId(id);
+        List<Message> messages = messageService.getAllTranslatedByChatId(id);
         ApiResponse response = new ApiResponse();
         response.setMessage("OK");
         response.setContent(messages.stream().map(m -> mapper.convertToMessageDTO(m)).collect(Collectors.toList()));

@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface MessageService {
     List<Message> getAllByChatId(Long id);
+    List<Message> getAllTranslatedByChatId(Long id);
     Message save(MessageRequest request);
 }

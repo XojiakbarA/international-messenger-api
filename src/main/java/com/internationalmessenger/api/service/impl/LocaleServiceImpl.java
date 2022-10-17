@@ -35,7 +35,8 @@ public class LocaleServiceImpl implements LocaleService {
         User user = userService.getById(request.getUserId());
         locale.setChat(chat);
         locale.setUser(user);
-        locale.setLanguage(request.getLanguage());
+        locale.setLanguageName(request.getLanguageName());
+        locale.setLanguageCode(request.getLanguageCode());
         return localeRepository.save(locale);
     }
 }

@@ -20,6 +20,9 @@ public class Locale extends Base {
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
-    @Column(name = "language")
-    private String language;
+    @Column(name = "language_name")
+    private String languageName;
+
+    @Column(name = "language_code")
+    private String languageCode;
 }

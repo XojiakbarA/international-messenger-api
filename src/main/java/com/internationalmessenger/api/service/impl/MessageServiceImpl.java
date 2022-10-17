@@ -1,13 +1,12 @@
 package com.internationalmessenger.api.service.impl;
 
 import com.internationalmessenger.api.entity.Chat;
+import com.internationalmessenger.api.entity.Locale;
 import com.internationalmessenger.api.entity.Message;
 import com.internationalmessenger.api.entity.User;
 import com.internationalmessenger.api.repository.MessageRepository;
 import com.internationalmessenger.api.request.MessageRequest;
-import com.internationalmessenger.api.service.ChatService;
-import com.internationalmessenger.api.service.MessageService;
-import com.internationalmessenger.api.service.UserService;
+import com.internationalmessenger.api.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +20,28 @@ public class MessageServiceImpl implements MessageService {
     private ChatService chatService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private LocaleService localeService;
+    @Autowired
+    private TranslateService translateService;
 
     @Override
     public List<Message> getAllByChatId(Long id) {
         return messageRepository.findAllByChatId(id);
+    }
+
+    @Override
+    public List<Message> getAllTranslatedByChatId(Long id) {
+        List<Message> messages = getAllByChatId(id);
+        Locale locale = localeService.getByChatIdAndAuthUser(id);
+        if (locale == null) {
+            return messages;
+        }
+        messages.forEach(m -> {
+            String translated = translateService.translate(m.getContent(), locale.getLanguageCode());
+            m.setContent(translated);
+        });
+        return messages;
     }
 
     @Override
